@@ -3,30 +3,75 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <strings.h>
+#include <ctype.h>
+
 
 #include "dictionary.h"
 
-// Returns true if word is in dictionary else false
-bool check(const char *word)
+
+
+
+typedef struct node         // node is now a data type
 {
-    printf("here: %s",word);
-    // TODO
+    char word[LENGTH + 1]; // An array of a given length plus 1, called word, of type char
+    struct node *next;     // Introduce a node pointer called next
+}
+node;
+
+node *HASH_TABLE[27];
+
+
+
+// Function used to hash word
+
+int hash_word (const char *word)
+{
+    char index = (tolower(word[0]))- 'a';
+    return index;
+
+}
+
+
+
+
+
+
+
+// Returns true if word is in dictionary else false
+// The purpose of check is that if the word exist then you will be able to find it in the dictionary data structure
+bool check(const char *word)
+{   // In a hashtable dictionary, which bucket would the word be in? HASHTABLE[hash(word)]
+
+    int hash = hash_word(word);
+    node *head = HASH_TABLE[hash];
+
+    // create a cursor that points to what head points to
+    node *cursor = head;
+
+    while (cursor != NULL)
+    {
+        int i = strcasecmp( word, cursor -> word);
+        // do something
+        if(i == 0) // that means the two strings are equal to each other
+        {
+        return true;
+        }
+        cursor = cursor -> next;
+    }
+
+//     // TODO
+    printf("here: %s", word);
     return false;
 }
+
+
+
 
 // Loads dictionary into memory, returning true if successful else false
 bool load(const char *dictionary)
 {
-    typedef struct node         // node is now a data type
-    {
-        char word[LENGTH + 1]; // An array of a given length plus 1, called word, of type char
-        struct node *next;     // Introduce a node pointer called next
-    }
-    node;
-
     char word[LENGTH + 1];
-
-    node *HASHTABLE[27]; //An array of node pointers called HASHTABLE //of type node pointer
 
     // Each index in the hashtable is of type node pointer
     FILE *file = fopen(dictionary,"r"); // introduces a pointer variable called file of type FILE
@@ -38,12 +83,6 @@ bool load(const char *dictionary)
 
     while(fscanf(file, "%s", word) != EOF)
     {
-        // Hash function // Hash the word
-        int letter = word[0] - 'a';
-        // stored it in a variable called 'head' of type node pointer,
-        // becuase each element in hashtable is of type node pointer already
-        node *head = HASHTABLE[letter];
-
         // Introduce a new node pointer and allocate memory for that pointer
         node *new_node = malloc(sizeof(node));
 
@@ -53,22 +92,33 @@ bool load(const char *dictionary)
             unload();
             return false;
         }
-
+        else
+        {
         // Else malloc does not return NULL, continue...
         // Sets values for the node
         strcpy(new_node -> word, word);
+        }
 
-        // initially head is NULL
-        new_node -> next = head;
+    // stored it in a variable called 'head' of type node pointer,
+    // becuase each element in hashtable is of type node pointer already
+    int hash = hash_word(word);
+    node *head = HASH_TABLE[hash];
+    // initially head is NULL
+    new_node -> next = head;
 
-        // Point Hash table indexed pointer to stored word
-        head = new_node;
+    // Point Hash table indexed pointer to stored word
+    head = new_node;
     }
 
     fclose(file);
 
     return true;
 }
+
+
+
+
+
 
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
