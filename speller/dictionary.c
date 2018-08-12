@@ -9,9 +9,6 @@
 
 #include "dictionary.h"
 
-
-
-
 typedef struct node         // node is now a data type
 {
     char word[LENGTH + 1]; // An array of a given length plus 1, called word, of type char
@@ -22,9 +19,7 @@ node;
 node *HASH_TABLE[27];
 
 
-
 // Function used to hash word
-
 int hash_word (const char *word)
 {
     char index = (tolower(word[0]))- 'a';
@@ -33,21 +28,16 @@ int hash_word (const char *word)
 }
 
 
-
-
-
-
-
 // Returns true if word is in dictionary else false
 // The purpose of check is that if the word exist then you will be able to find it in the dictionary data structure
 bool check(const char *word)
 {   // In a hashtable dictionary, which bucket would the word be in? HASHTABLE[hash(word)]
 
-    int hash = hash_word(word);
-    node *head = HASH_TABLE[hash];
+    int head = hash_word(word);
+   // node *head = HASH_TABLE[hash];
 
     // create a cursor that points to what head points to
-    node *cursor = head;
+    node *cursor = HASH_TABLE[head];
 
     while (cursor != NULL)
     {
@@ -60,12 +50,8 @@ bool check(const char *word)
         cursor = cursor -> next;
     }
 
-//     // TODO
-    printf("here: %s", word);
     return false;
 }
-
-
 
 
 // Loads dictionary into memory, returning true if successful else false
@@ -101,13 +87,11 @@ bool load(const char *dictionary)
 
     // stored it in a variable called 'head' of type node pointer,
     // becuase each element in hashtable is of type node pointer already
-    int hash = hash_word(word);
-    node *head = HASH_TABLE[hash];
+    int head = hash_word(word);
     // initially head is NULL
-    new_node -> next = head;
-
+    new_node -> next = HASH_TABLE[head];
     // Point Hash table indexed pointer to stored word
-    head = new_node;
+    HASH_TABLE[head] = new_node;
     }
 
     fclose(file);
