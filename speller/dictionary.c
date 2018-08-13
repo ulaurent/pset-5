@@ -16,7 +16,8 @@ typedef struct node         // node is now a data type
 }
 node;
 
-node *HASH_TABLE[27];
+node *HASH_TABLE[26];
+unsigned int word_count = 0;
 
 
 // Function used to hash word
@@ -92,6 +93,7 @@ bool load(const char *dictionary)
     new_node -> next = HASH_TABLE[head];
     // Point Hash table indexed pointer to stored word
     HASH_TABLE[head] = new_node;
+    word_count ++;
     }
 
     fclose(file);
@@ -107,13 +109,30 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    return word_count;
 }
 
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
+    for(int head = 0; head <= 25; head++)
+    {
+        // create a cursor that points to what head points to
+        node *cursor = HASH_TABLE[head];
+
+        while(cursor != NULL)
+        {
+            node *temp = cursor;
+            cursor = cursor -> next;
+            free(temp);
+
+            if(temp == NULL)
+            {
+                return true;
+            }
+        }
+    }
+
     // TODO
     return false;
 }
