@@ -125,14 +125,10 @@ bool unload(void)
             node *temp = cursor;
             cursor = cursor -> next;
             free(temp);
-
-            if(temp == NULL)
-            {
-                return true;
-            }
+            temp = cursor;
         }
     }
 
     // TODO
-    return false;
+    return true;
 }
