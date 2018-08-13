@@ -1,4 +1,4 @@
-// Implements a dictionary's functionality
+// Implements a dictionary functionality
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -129,6 +129,5 @@ bool unload(void)
         }
     }
 
-    // TODO
     return true;
 }

@@ -2,28 +2,19 @@
 
 ## What is pneumonoultramicroscopicsilicovolcanoconiosis?
 
-TODO
+A word that means a lung disease caused by inhaling very fine ash and sand dust
 
 ## According to its man page, what does `getrusage` do?
 
-TODO
+getrusage - get information about resource utilization
+The getrusage() function shall provide measures of the resources used by the current process or its terminated
+and waited-for child processes. If the value of the who argument is RUSAGE_SELF,
+information shall be returned about resources used by the current process.
+If the value of the who argument is RUSAGE_CHILDREN, information shall be returned about resources used by the terminated
+and waited-for children of the current process. If the child is never waited for
+(for example, if the parent has SA_NOCLDWAIT set or sets SIGCHLD to SIG_IGN),
+the resource information for the child process is discarded and not included in the resource information provided by getrusage().
 
 ## Per that same man page, how many members are in a variable of type `struct rusage`?
 
-TODO
-
-## Why do you think we pass `before` and `after` by reference (instead of by value) to `calculate`, even though we're not changing their contents?
-
-TODO
-
-## Explain as precisely as possible, in a paragraph or more, how `main` goes about reading words from a file. In other words, convince us that you indeed understand how that function's `for` loop works.
-
-TODO
-
-## Why do you think we used `fgetc` to read each word's characters one at a time rather than use `fscanf` with a format string like `"%s"` to read whole words at a time? Put another way, what problems might arise by relying on `fscanf` alone?
-
-TODO
-
-## Why do you think we declared the parameters for `check` and `load` as `const` (which means "constant")?
-
-TODO
+There are 16 members in a variable of type struct rusage.
