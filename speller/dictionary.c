@@ -87,7 +87,7 @@ bool load(const char *dictionary)
         }
 
     // stored it in a variable called 'head' of type node pointer,
-    // becuase each element in hashtable is of type node pointer already
+    // because each element in hashtable is of type node pointer already
     int head = hash_word(word);
     // initially head is NULL
     new_node -> next = HASH_TABLE[head];
