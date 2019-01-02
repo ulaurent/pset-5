@@ -1,4 +1,3 @@
 # pset-5
 
-Implement a program that spell-checks a file, per the below.
-
+Implemented a program that spell-checks a file after loading a dictionary of words from disk into memory.
