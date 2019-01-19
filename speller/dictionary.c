@@ -30,7 +30,7 @@ int hash_word (const char *word)
 
 
 // Returns true if word is in dictionary else false
-// The purpose of check is that if the word exist then you will be able to find it in the dictionary data structure
+// The purpose of check:if the word exist then you will be able to find it in the dictionary data structure
 bool check(const char *word)
 {   // In a hashtable dictionary, which bucket would the word be in? HASHTABLE[hash(word)]
 
@@ -61,9 +61,11 @@ bool load(const char *dictionary)
     char word[LENGTH + 1];
 
     // Each index in the hashtable is of type node pointer
-    FILE *file = fopen(dictionary,"r"); // introduces a pointer variable called file of type FILE
+    // introduces a pointer variable called file of type FILE
+    FILE *file = fopen(dictionary,"r"); 
 
-    if(file == NULL){
+    if(file == NULL)
+    {
         fprintf(stderr, "FILE ERROR OPENING");
         return 1;
     }
@@ -86,14 +88,13 @@ bool load(const char *dictionary)
         strcpy(new_node -> word, word);
         }
 
-    // stored it in a variable called 'head' of type node pointer,
-    // because each element in hashtable is of type node pointer already
-    int head = hash_word(word);
-    // initially head is NULL
-    new_node -> next = HASH_TABLE[head];
-    // Point Hash table indexed pointer to stored word
-    HASH_TABLE[head] = new_node;
-    word_count ++;
+        // stored it in a variable called 'head' of type node pointer
+        int head = hash_word(word);
+        // initially head is NULL
+        new_node -> next = HASH_TABLE[head];
+        // Point Hash table indexed pointer to stored word
+        HASH_TABLE[head] = new_node;
+        word_count ++;
     }
 
     fclose(file);
